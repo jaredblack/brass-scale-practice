@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BrassScalePractice.iml" filepath="$PROJECT_DIR$/BrassScalePractice.iml" />
+      <module fileurl="file://E:\CS\BrassApp\brass-scale-practice\BrassScalePractice\BrassScalePractice.iml" filepath="E:\CS\BrassApp\brass-scale-practice\BrassScalePractice\BrassScalePractice.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\CS\BrassApp\brass-scale-practice\BrassScalePractice\app\app.iml" filepath="E:\CS\BrassApp\brass-scale-practice\BrassScalePractice\app\app.iml" />
     </modules>
   </component>
 </project>
