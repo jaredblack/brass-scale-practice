@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Brass Scale Practice</string>
+    <string name="valve_1">1st Valve</string>
+    <string name="valve_2">2nd Valve</string>
+    <string name="valve_3">3rd Valve</string>
+
 </resources>
