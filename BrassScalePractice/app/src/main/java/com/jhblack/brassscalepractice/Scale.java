@@ -10,6 +10,7 @@ public class Scale {
     private boolean[][] scaleArr;
     private String scaleName;
     int currentNote;
+    boolean goingUp = true;
 
     public Scale() {
         currentNote = 0;
@@ -53,9 +54,16 @@ public class Scale {
 
     }
 
+    public int getCurrentNote() {
+        return currentNote;
+    }
+
     public void incrementNote() {
-        if(currentNote < 7)
+        if(goingUp && currentNote < 7)
             currentNote++;
+        else if(!goingUp && currentNote > 0)
+            currentNote--;
+        else goingUp = !goingUp;
     }
 
     public String getNoteName() {
@@ -70,5 +78,18 @@ public class Scale {
             case 7: return "C";
         }
         return "L#";
+    }
+
+    public int[] getNoteNames() {
+        int[] noteFiles = new int[8];
+        noteFiles[0] = R.raw.bb3;
+        noteFiles[1] = R.raw.c4;
+        noteFiles[2] = R.raw.d4;
+        noteFiles[3] = R.raw.eb4;
+        noteFiles[4] = R.raw.f4;
+        noteFiles[5] = R.raw.g4;
+        noteFiles[6] = R.raw.a4;
+        noteFiles[7] = R.raw.bb4;
+        return noteFiles;
     }
 }
