@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     Button valve1;
     Button valve2;
     Button valve3;
+    Scale cMaj;
+    boolean firstTime = true;
+    Timer met;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +38,37 @@ public class MainActivity extends AppCompatActivity {
         valve1.setOnTouchListener(new ValveOnTouchListener(1));
         valve2.setOnTouchListener(new ValveOnTouchListener(2));
         valve3.setOnTouchListener(new ValveOnTouchListener(3));
+
+        cMaj = new Scale();
     }
 
     public void startMetronome(View view) {
-        Timer met = new Timer();
-        TimerTask metTask = new TimerTask() {
 
-            @Override
-            public void run() {
-                soundPool.play(metId, 1, 1, 1, 0, 1f);
-                boolean[] valves = ValveOnTouchListener.getValvesPressed();
-                if(valves[1] && valves[2] && valves[3]) {
-                    Log.d("MainActivity", "You Are a Good Boi");
-                } else {
-                    Log.d("MainActivity", "Bad Valves!");
+        if (firstTime) {
+            met = new Timer();
+            TimerTask metTask = new TimerTask() {
+                @Override
+                public void run() {
+                    //soundPool.play(metId, 1, 1, 1, 0, 1f);
+                    valveCheck();
                 }
-            }
-        };
-        met.schedule(metTask, 0L, 600L);
+            };
+            met.schedule(metTask, 0L, 60L);
+            firstTime = false;
+        } else {
+            met.cancel();
+            firstTime = true;
+        }
+    }
+
+    public void valveCheck() {
+
+        boolean[] correctValves = cMaj.getNextNote();
+        boolean[] valvesPressed = ValveOnTouchListener.getValvesPressed();
+        if(Arrays.equals(correctValves, valvesPressed)){
+            Log.d("MainActivity/valveCheck", "Note " + cMaj.getNoteName() + " is correct");
+            cMaj.incrementNote();
+
+        }
     }
 }
