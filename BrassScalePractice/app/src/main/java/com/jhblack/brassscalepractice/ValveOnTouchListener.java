@@ -9,7 +9,7 @@ import android.view.View;
 
 public class ValveOnTouchListener implements View.OnTouchListener {
 
-    private static boolean[] valvesPressed = new boolean[4];
+    private static boolean[] valvesPressed = new boolean[3];
     private int valveId;
 
     public ValveOnTouchListener(int id) {
@@ -17,11 +17,18 @@ public class ValveOnTouchListener implements View.OnTouchListener {
     }
 
     public boolean onTouch(View v, MotionEvent motionEvent) {
-        valvesPressed[valveId] = true;
+        switch(motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN: valvesPressed[valveId - 1] = true;
+            break;
+            case MotionEvent.ACTION_UP: valvesPressed[valveId-1] = false;
+
+        }
         return true;
     }
 
     public static boolean[] getValvesPressed() {
         return valvesPressed;
     }
+
+
 }
