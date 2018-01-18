@@ -1,6 +1,7 @@
 package com.jhblack.brassscalepractice;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private SoundPool soundPool;
     int metId;
     int[] noteIds;
+    int wrongId;
     Button valve1;
     Button valve2;
     Button valve3;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     boolean firstTime = true;
     Timer met;
     int lastNote = 0;
-    boolean[] lastValves;
+    boolean[] lastValves = new boolean[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < notes.length; i++) {
             noteIds[i] = soundPool.load(mContext, notes[i], 1);
         }
+        wrongId = soundPool.load(mContext, R.raw.wrong, 1);
 
         valve1 = findViewById(R.id.valve_1);
         valve2 = findViewById(R.id.valve_2);
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     valveCheck();
                 }
             };
-            met.schedule(metTask, 0L, 60L);
+            met.schedule(metTask, 0L, 90L);
             firstTime = false;
         } else {
             met.cancel();
@@ -91,13 +94,23 @@ public class MainActivity extends AppCompatActivity {
 
             cMaj.incrementNote();
         } else if(!Arrays.equals(valvesPressed, lastValves)) {
-            wrongValves();
+            Log.d("boi", "valveCheck: BOId");
+            wrongValves(correctValves);
         }
 
-        lastValves = valvesPressed;
+        lastValves = Arrays.copyOf(valvesPressed, 3);
     }
 
-    private void wrongValves() {
+    private void wrongValves(boolean[] correctValves) {
         Log.d("Main/wrongValves", "WRONG!");
+
+        if(correctValves[0])
+            valve1.setBackgroundColor(Color.GREEN);
+        if(correctValves[1])
+            valve2.setBackgroundColor(Color.GREEN);
+        if(correctValves[2])
+            valve3.setBackgroundColor(Color.GREEN);
+        
+        soundPool.play(wrongId,1,1,1,1,1f);
     }
 }

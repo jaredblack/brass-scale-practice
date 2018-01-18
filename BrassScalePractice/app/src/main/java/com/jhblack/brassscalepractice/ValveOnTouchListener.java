@@ -21,8 +21,9 @@ public class ValveOnTouchListener implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN: valvesPressed[valveId - 1] = true;
             break;
             case MotionEvent.ACTION_UP: valvesPressed[valveId-1] = false;
-
         }
+
+
         return true;
     }
 
