@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     boolean firstTime = true;
     Timer met;
     int lastNote = 0;
+    boolean[] lastValves;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             cMaj.incrementNote();
+        } else if(!Arrays.equals(valvesPressed, lastValves)) {
+            wrongValves();
         }
+
+        lastValves = valvesPressed;
+    }
+
+    private void wrongValves() {
+        Log.d("Main/wrongValves", "WRONG!");
     }
 }
