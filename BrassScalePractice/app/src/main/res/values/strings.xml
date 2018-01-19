@@ -3,5 +3,7 @@
     <string name="valve_1">1st Valve</string>
     <string name="valve_2">2nd Valve</string>
     <string name="valve_3">3rd Valve</string>
-
+    <string name="start_state">Start</string>
+    <string name="stop_state">Stop</string>
+    <string name="note_display_default">Note Display</string>
 </resources>
