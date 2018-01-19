@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     boolean[] lastValves = new boolean[3];
     Button startButton;
     TextView noteView;
+    boolean lastWasWrong = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,25 +98,33 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                if(lastWasWrong) {
+                    valve1.getBackground().clearColorFilter();
+                    valve2.getBackground().clearColorFilter();
+                    valve3.getBackground().clearColorFilter();
+                }
+
                 Log.d("MainActivity/valveCheck", "Note " + currentNoteName + " is correct");
                 soundPool.stop(lastNote);
                 lastNote = soundPool.play(noteIds[cMaj.getCurrentNote()], 1, 1, 1, 1, 1f);
                 cMaj.incrementNote();
+                lastWasWrong = false;
             } else if(!Arrays.equals(valvesPressed, lastValves)){
                 Log.d("boi", "valveCheck: BOId");
                 wrongValves(correctValves);
+                lastWasWrong = true;
             }
         lastValves = Arrays.copyOf(valvesPressed, 3);
     }
 
     private void wrongValves(boolean[] correctValves) {
         Log.d("Main/wrongValves", "WRONG!");
-//        if(correctValves[0])
-//            valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-//        if(correctValves[1])
-//            valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-//        if(correctValves[2])
-//            valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-//        soundPool.play(wrongId,1,1,1,1,1f);
+        if(correctValves[0])
+            valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+        if(correctValves[1])
+            valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+        if(correctValves[2])
+            valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+        soundPool.play(wrongId,1,1,1,1,1f);
     }
 }
