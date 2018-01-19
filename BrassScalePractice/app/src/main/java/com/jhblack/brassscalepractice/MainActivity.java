@@ -1,7 +1,9 @@
 package com.jhblack.brassscalepractice;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -87,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+
+            valve1.getBackground().clearColorFilter();
+
             Log.d("MainActivity/valveCheck", "Note " + cMaj.getNoteName() + " is correct");
             soundPool.stop(lastNote);
             lastNote = soundPool.play(noteIds[cMaj.getCurrentNote()], 1, 1, 1, 1, 1f);
@@ -103,13 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void wrongValves(boolean[] correctValves) {
         Log.d("Main/wrongValves", "WRONG!");
-
         if(correctValves[0])
-            valve1.setBackgroundColor(Color.GREEN);
+            valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         if(correctValves[1])
-            valve2.setBackgroundColor(Color.GREEN);
+            valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         if(correctValves[2])
-            valve3.setBackgroundColor(Color.GREEN);
+            valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         
         soundPool.play(wrongId,1,1,1,1,1f);
     }
