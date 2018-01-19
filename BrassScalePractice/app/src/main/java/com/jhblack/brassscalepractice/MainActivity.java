@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     Timer met;
     int lastNote = 0;
     boolean[] lastValves = new boolean[3];
+    Button startButton;
+    TextView noteView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         soundPool = new SoundPool.Builder().build();
         metId = soundPool.load(mContext, R.raw.click, 1);
-
+        startButton = findViewById(R.id.start_button);
         cMaj = new Scale();
         int[] notes = cMaj.getNoteNames();
         noteIds = new int[8];
+        noteView = findViewById(R.id.note_display);
         for(int i = 0; i < notes.length; i++) {
             noteIds[i] = soundPool.load(mContext, notes[i], 1);
         }
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void startMetronome(View view) {
+    public void start(View view) {
 
         if (firstTime) {
             met = new Timer();
@@ -69,9 +72,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             met.schedule(metTask, 0L, 90L);
+            startButton.setText(R.string.stop_state);
             firstTime = false;
         } else {
             met.cancel();
+            soundPool.stop(lastNote);
+            cMaj.reset();
+            startButton.setText(R.string.start_state);
+            noteView.setText(R.string.note_display_default);
             firstTime = true;
         }
     }
@@ -80,40 +88,34 @@ public class MainActivity extends AppCompatActivity {
         boolean[] correctValves = cMaj.getNextNote();
         boolean[] valvesPressed = ValveOnTouchListener.getValvesPressed();
 
-        if(Arrays.equals(correctValves, valvesPressed)){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    TextView noteView = findViewById(R.id.note_display);
-                    noteView.setText(cMaj.getNoteName());
-                }
-            });
+            if (Arrays.equals(correctValves, valvesPressed)) {
+                final String currentNoteName = cMaj.getNoteName();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        noteView.setText(currentNoteName);
+                    }
+                });
 
-
-            valve1.getBackground().clearColorFilter();
-
-            Log.d("MainActivity/valveCheck", "Note " + cMaj.getNoteName() + " is correct");
-            soundPool.stop(lastNote);
-            lastNote = soundPool.play(noteIds[cMaj.getCurrentNote()], 1, 1, 1, 1, 1f);
-
-
-            cMaj.incrementNote();
-        } else if(!Arrays.equals(valvesPressed, lastValves)) {
-            Log.d("boi", "valveCheck: BOId");
-            wrongValves(correctValves);
-        }
-
+                Log.d("MainActivity/valveCheck", "Note " + currentNoteName + " is correct");
+                soundPool.stop(lastNote);
+                lastNote = soundPool.play(noteIds[cMaj.getCurrentNote()], 1, 1, 1, 1, 1f);
+                cMaj.incrementNote();
+            } else if(!Arrays.equals(valvesPressed, lastValves)){
+                Log.d("boi", "valveCheck: BOId");
+                wrongValves(correctValves);
+            }
         lastValves = Arrays.copyOf(valvesPressed, 3);
     }
 
     private void wrongValves(boolean[] correctValves) {
         Log.d("Main/wrongValves", "WRONG!");
-        if(correctValves[0])
-            valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-        if(correctValves[1])
-            valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-        if(correctValves[2])
-            valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-        soundPool.play(wrongId,1,1,1,1,1f);
+//        if(correctValves[0])
+//            valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+//        if(correctValves[1])
+//            valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+//        if(correctValves[2])
+//            valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+//        soundPool.play(wrongId,1,1,1,1,1f);
     }
 }

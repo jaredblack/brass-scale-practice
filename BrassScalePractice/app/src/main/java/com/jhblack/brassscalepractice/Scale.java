@@ -58,12 +58,20 @@ public class Scale {
         return currentNote;
     }
 
+    public void reset() {
+        currentNote = 0;
+    }
+
     public void incrementNote() {
         if(goingUp && currentNote < 7)
             currentNote++;
         else if(!goingUp && currentNote > 0)
             currentNote--;
-        else goingUp = !goingUp;
+        else {
+            goingUp = !goingUp;
+            if(goingUp) currentNote++;
+            else currentNote--;
+        }
     }
 
     public String getNoteName() {
