@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         if(correctValves[2])
             valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-
         soundPool.play(wrongId,1,1,1,1,1f);
     }
 }
