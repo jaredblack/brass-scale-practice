@@ -21,4 +21,5 @@
         <item>B&#9837;</item>
         <item>F&#9837;</item>
     </string-array>
+    <string name="score">Score %1$d</string>
 </resources>

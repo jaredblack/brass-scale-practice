@@ -2,6 +2,7 @@ package com.jhblack.brassscalepractice;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.SoundPool;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button startButton;
     TextView noteView;
     boolean lastWasWrong = false;
-    int score;
+    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             startButton.setText(R.string.start_state);
             noteView.setText(R.string.note_display_default);
             firstTime = true;
+            score = 0;
         }
     }
 
@@ -97,18 +99,29 @@ public class MainActivity extends AppCompatActivity {
 
             if (Arrays.equals(correctValves, valvesPressed)) {
                 final String currentNoteName = cMaj.getNoteName();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        noteView.setText(currentNoteName);
-                    }
-                });
 
                 if(lastWasWrong) {
                     valve1.getBackground().clearColorFilter();
                     valve2.getBackground().clearColorFilter();
                     valve3.getBackground().clearColorFilter();
+                } else {
+                    incrementScore();
                 }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        noteView.setText(currentNoteName);
+                        Resources res = getResources();
+//                        TextView scoreView = findViewById(R.id.score_view);
+                        //String scoreText =
+                         res.getString(R.string.score, score);
+//                        scoreView.setText(scoreText);
+                    }
+                });
+
+
+
+
 
                 Log.d("MainActivity/valveCheck", "Note " + currentNoteName + " is correct");
                 soundPool.stop(lastNote);
@@ -134,4 +147,14 @@ public class MainActivity extends AppCompatActivity {
             valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         soundPool.play(wrongId,1,1,1,1,1f);
     }
+
+    private void incrementScore() {
+        if(cMaj.getCurrentNote() == 7) {
+            score += 10;
+        } else {
+            score += 6;
+        }
+    }
+
+
 }
