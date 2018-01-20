@@ -11,7 +11,7 @@
     <Button
         android:id="@+id/valve_3"
         android:layout_width="0dp"
-        android:layout_height="115dp"
+        android:layout_height="130dp"
         android:layout_marginBottom="8dp"
         android:text="@string/valve_3"
         app:layout_constraintBottom_toTopOf="@+id/valve_2"
@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/valve_2"
         android:layout_width="0dp"
-        android:layout_height="115dp"
+        android:layout_height="130dp"
         android:layout_marginBottom="8dp"
         android:text="@string/valve_2"
         app:layout_constraintBottom_toTopOf="@+id/valve_1"
@@ -33,7 +33,7 @@
     <Button
         android:id="@+id/valve_1"
         android:layout_width="0dp"
-        android:layout_height="115dp"
+        android:layout_height="130dp"
         android:layout_marginBottom="16dp"
         android:text="@string/valve_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,14 +44,13 @@
         android:id="@+id/note_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/note_display_default"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/valve_3"
+        app:layout_constraintBottom_toBottomOf="@+id/start_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/start_button"
@@ -60,38 +59,23 @@
         android:layout_marginTop="16dp"
         android:onClick="start"
         android:text="Start"
-        app:layout_constraintEnd_toStartOf="@+id/note_selector"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="227dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="32dp" />
-
-    <Spinner
-        android:id="@+id/note_selector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="32dp" />
 
     <TextView
         android:id="@+id/score_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/score"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/valve_3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/note_display" />
+        app:layout_constraintTop_toBottomOf="@+id/note_display"
+        app:layout_constraintVertical_bias="0.385" />
 
 </android.support.constraint.ConstraintLayout>

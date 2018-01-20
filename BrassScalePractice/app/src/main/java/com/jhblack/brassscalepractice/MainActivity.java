@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView noteView;
     boolean lastWasWrong = false;
     int score = 0;
+    boolean firstOffense = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
         valve1 = findViewById(R.id.valve_1);
         valve2 = findViewById(R.id.valve_2);
         valve3 = findViewById(R.id.valve_3);
-
+        updateScoreText();
         valve1.setOnTouchListener(new ValveOnTouchListener(1));
         valve2.setOnTouchListener(new ValveOnTouchListener(2));
         valve3.setOnTouchListener(new ValveOnTouchListener(3));
-        Spinner spinner = findViewById(R.id.note_selector);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.note_names, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+//        Spinner spinner = findViewById(R.id.note_selector);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.note_names, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
 
     }
 
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         boolean[] valvesPressed = ValveOnTouchListener.getValvesPressed();
 
             if (Arrays.equals(correctValves, valvesPressed)) {
-                final String currentNoteName = cMaj.getNoteName();
+                String currentNoteName = cMaj.getNoteName();
 
                 if(lastWasWrong) {
                     valve1.getBackground().clearColorFilter();
@@ -107,17 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     incrementScore();
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        noteView.setText(currentNoteName);
-                        Resources res = getResources();
-//                        TextView scoreView = findViewById(R.id.score_view);
-                        //String scoreText =
-                         res.getString(R.string.score, score);
-//                        scoreView.setText(scoreText);
-                    }
-                });
+                updateScoreText();
 
 
 
@@ -129,28 +120,51 @@ public class MainActivity extends AppCompatActivity {
                 cMaj.incrementNote();
                 lastWasWrong = false;
             } else if(!Arrays.equals(valvesPressed, lastValves)){
-                Log.d("boi", "valveCheck: BOId");
+
                 wrongValves(correctValves);
-                lastWasWrong = true;
+
             }
         lastValves = Arrays.copyOf(valvesPressed, 3);
     }
 
-    private void wrongValves(boolean[] correctValves) {
-        Log.d("Main/wrongValves", "WRONG!");
+    private void updateScoreText() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                noteView.setText(cMaj.getNoteName());
+                Resources res = getResources();
+                TextView scoreView = findViewById(R.id.score_view);
+                String scoreText = res.getString(R.string.score, score);
+                scoreView.setText(scoreText);
+            }
+        });
+    }
 
-        if(correctValves[0])
-            valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-        if(correctValves[1])
-            valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-        if(correctValves[2])
-            valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
-        soundPool.play(wrongId,1,1,1,1,1f);
+    private boolean wrongValves(boolean[] correctValves) {
+        Log.d("Main/wrongValves", "WRONG!");
+        if(firstOffense) {
+            firstOffense = false;
+            Log.d("MainActivity", "wrongValves: first offense");
+            return false;
+        } else {
+            if (correctValves[0])
+                valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+            if (correctValves[1])
+                valve2.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+            if (correctValves[2])
+                valve3.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+            soundPool.play(wrongId, 1, 1, 1, 1, 1f);
+            firstOffense = true;
+            lastWasWrong = true;
+            Log.d("MainActivity", "wrongValves: second offense");
+            return true;
+        }
+
     }
 
     private void incrementScore() {
         if(cMaj.getCurrentNote() == 7) {
-            score += 10;
+            score += 16;
         } else {
             score += 6;
         }
