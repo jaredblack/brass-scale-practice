@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button startButton;
     TextView noteView;
     boolean lastWasWrong = false;
+    int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
         valve1.setOnTouchListener(new ValveOnTouchListener(1));
         valve2.setOnTouchListener(new ValveOnTouchListener(2));
         valve3.setOnTouchListener(new ValveOnTouchListener(3));
-
+        Spinner spinner = findViewById(R.id.note_selector);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.note_names, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
     }
 
@@ -119,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void wrongValves(boolean[] correctValves) {
         Log.d("Main/wrongValves", "WRONG!");
+
         if(correctValves[0])
             valve1.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
         if(correctValves[1])

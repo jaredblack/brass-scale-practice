@@ -6,4 +6,19 @@
     <string name="start_state">Start</string>
     <string name="stop_state">Stop</string>
     <string name="note_display_default">Note Display</string>
+    <string-array name="note_names">
+        <item>C</item>
+        <item>G</item>
+        <item>D</item>
+        <item>A</item>
+        <item>E</item>
+        <item>B</item>
+        <item>G</item>
+        <item>G&#9837;</item>
+        <item>D&#9837;</item>
+        <item>A&#9837;</item>
+        <item>E&#9837;</item>
+        <item>B&#9837;</item>
+        <item>F&#9837;</item>
+    </string-array>
 </resources>
