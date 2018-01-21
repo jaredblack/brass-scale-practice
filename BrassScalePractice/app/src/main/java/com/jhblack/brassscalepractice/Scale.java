@@ -9,44 +9,12 @@ import android.util.Log;
 public class Scale {
     private boolean[][] scaleArr;
     private String scaleName;
-    int currentNote;
-    boolean goingUp = true;
+    private int currentNote;
+    private boolean goingUp = true;
 
-    public Scale() {
+    public Scale(Note startingNote, ScaleType scaleType) {
         currentNote = 0;
         scaleArr = new boolean[8][3];
-
-        scaleArr[0][0] = false;
-        scaleArr[0][1] = false;
-        scaleArr[0][2] = false;
-
-        scaleArr[1][0] = true;
-        scaleArr[1][1] = false;
-        scaleArr[1][2] = true;
-
-        scaleArr[2][0] = true;
-        scaleArr[2][1] = true;
-        scaleArr[2][2] = false;
-
-        scaleArr[3][0] = true;
-        scaleArr[3][1] = false;
-        scaleArr[3][2] = false;
-
-        scaleArr[4][0] = false;
-        scaleArr[4][1] = false;
-        scaleArr[4][2] = false;
-
-        scaleArr[5][0] = true;
-        scaleArr[5][1] = true;
-        scaleArr[5][2] = false;
-
-        scaleArr[6][0] = false;
-        scaleArr[6][1] = true;
-        scaleArr[6][2] = false;
-
-        scaleArr[7][0] = false;
-        scaleArr[7][1] = false;
-        scaleArr[7][2] = false;
     }
 
     public boolean[] getNextNote() {

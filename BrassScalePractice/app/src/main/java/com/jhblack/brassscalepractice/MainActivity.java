@@ -22,22 +22,22 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
     private Context mContext;
     private SoundPool soundPool;
-    int metId;
-    int[] noteIds;
-    int wrongId;
-    Button valve1;
-    Button valve2;
-    Button valve3;
-    Scale cMaj;
-    boolean firstTime = true;
-    Timer met;
-    int lastNote = 0;
-    boolean[] lastValves = new boolean[3];
-    Button startButton;
-    TextView noteView;
-    boolean lastWasWrong = false;
-    int score = 0;
-    boolean firstOffense = true;
+    private int metId;
+    private int[] noteIds;
+    private int wrongId;
+    private Button valve1;
+    private Button valve2;
+    private Button valve3;
+    private Scale cMaj;
+    private boolean firstTime = true;
+    private Timer met;
+    private int lastNote = 0;
+    private boolean[] lastValves = new boolean[3];
+    private Button startButton;
+    private TextView noteView;
+    private boolean lastWasWrong = false;
+    private int score = 0;
+    private boolean firstOffense = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 updateScoreText();
 
-
-
-
-
                 Log.d("MainActivity/valveCheck", "Note " + currentNoteName + " is correct");
                 soundPool.stop(lastNote);
                 lastNote = soundPool.play(noteIds[cMaj.getCurrentNote()], 1, 1, 1, 1, 1f);
@@ -145,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         if(firstOffense) {
             firstOffense = false;
             Log.d("MainActivity", "wrongValves: first offense");
+
             return false;
         } else {
             if (correctValves[0])
