@@ -6,54 +6,53 @@ import android.util.Log;
  * Created by Jared on 1/15/2018.
  */
 
-public class Scale {
-    private boolean[][] scaleArr;
+public class Scale
     private String scaleName;
-    private int currentNote;
+    private Note startingNote;
+    private Note currentNote;
     private boolean goingUp = true;
+    private int scaleLoc;
+    private int[] scaleType;
 
-    public Scale(Note startingNote, ScaleType scaleType) {
-        currentNote = 0;
-        scaleArr = new boolean[8][3];
+    public Scale(Note startingNote, int[] scaleType) {
+        currentNote = startingNote;
+        this.startingNote = startingNote;
+        this.scaleType = scaleType;
+        scaleLoc = 0;
     }
 
-    public boolean[] getNextNote() {
-        return scaleArr[currentNote];
+    public boolean[] getCurrentValves() {
+        return currentNote.getValves();
 
     }
 
-    public int getCurrentNote() {
+    public Note getCurrentNote() {
         return currentNote;
     }
 
     public void reset() {
-        currentNote = 0;
+        currentNote = startingNote;
     }
 
     public void incrementNote() {
-        if(goingUp && currentNote < 7)
-            currentNote++;
-        else if(!goingUp && currentNote > 0)
-            currentNote--;
-        else {
-            goingUp = !goingUp;
-            if(goingUp) currentNote++;
-            else currentNote--;
-        }
+        if(scaleLoc < scaleType.length && goingUp) {
+            currentNote = Note.getNoteById(currentNote.getValue() + scaleType[scaleLoc]);
+            scaleLoc++;
+        } else if(scaleLoc >= 0 && )
     }
 
     public String getNoteName() {
-        switch(currentNote) {
-            case 0: return "C";
-            case 1: return "D";
-            case 2: return "E";
-            case 3: return "F";
-            case 4: return "G";
-            case 5: return "A";
-            case 6: return "B";
-            case 7: return "C";
-        }
-        return "L#";
+//        switch(currentNote) {
+//            case 0: return "C";
+//            case 1: return "D";
+//            case 2: return "E";
+//            case 3: return "F";
+//            case 4: return "G";
+//            case 5: return "A";
+//            case 6: return "B";
+//            case 7: return "C";
+//        }
+//        return "L#";
     }
 
     public int[] getNoteNames() {

@@ -6,29 +6,31 @@ package com.jhblack.brassscalepractice;
 
 public enum Note implements Fingerings {
 
-    E3(0,TTT, R.raw.e3),F3(1,TFT,R.raw.f3),GB3(2,FTT,R.raw.gb3),
-    G3(3,TTF,R.raw.g3),AB3(4,TFF,R.raw.ab3),A3(5,FTF,R.raw.a3),
-    BB3(6,FFF,R.raw.bb3),B3(7,TTT,R.raw.b3), C4(8,TFT,R.raw.c4),
-    DB4(9,FTT,R.raw.db4),D4(10,TTF,R.raw.d4),EB4(11,TFF,R.raw.eb4),
-    E4(12,FTF,R.raw.e4),F4(13,FFF,R.raw.f4),GB4(14,FTT,R.raw.gb4),
-    G4(15,TTF,R.raw.g4),AB4(16,TFF,R.raw.ab4),A4(17,FTF,R.raw.a4),
-    BB4(18,FFF,R.raw.bb4),B4(19,TTF,R.raw.b4), C5(20,TFF,R.raw.c5),
-    DB5(21,FTF,R.raw.db5),D5(22,FFF,R.raw.d5),EB5(23,TFF,R.raw.eb5),
-    E5(24,FTF,R.raw.e5),F5(25,FFF,R.raw.f5),GB5(26,FTT,R.raw.gb5),
-    G5(27,TTF,R.raw.g5),AB5(28,TFF,R.raw.ab5),A5(29,FTF,R.raw.a5),
-    BB5(30,FFF,R.raw.bb5),B5(31,TTF,R.raw.b5), C6(32,TFF,R.raw.c6),
-    DB6(33,FTF,R.raw.db6),D6(34,FFF,R.raw.d6),EB6(35,TFF,R.raw.eb6),
-    E6(36,FTF,R.raw.e6),F6(37,FFF,R.raw.f6);
+    E3(0,TTT, R.raw.e3, "E"),F3(1,TFT,R.raw.f3,"F"),GB3(2,FTT,R.raw.gb3,"F#/G\u23E5"),
+    G3(3,TTF,R.raw.g3,"G"),AB3(4,TFF,R.raw.ab3,"G#/B\u266D"),A3(5,FTF,R.raw.a3,"A"),
+    BB3(6,FFF,R.raw.bb3,"A#/B\u266D"),B3(7,TTT,R.raw.b3,"B"), C4(8,TFT,R.raw.c4,"C"),
+    DB4(9,FTT,R.raw.db4,"C#/D\u266D"),D4(10,TTF,R.raw.d4,"D"),EB4(11,TFF,R.raw.eb4,"D#/E\u266D"),
+    E4(12,FTF,R.raw.e4,"E"),F4(13,FFF,R.raw.f4,"F"),GB4(14,FTT,R.raw.gb4,"F#/G\u266D"),
+    G4(15,TTF,R.raw.g4,"G"),AB4(16,TFF,R.raw.ab4,"G#/A\u266D"),A4(17,FTF,R.raw.a4,"A"),
+    BB4(18,FFF,R.raw.bb4,"A#/B\u266D"),B4(19,TTF,R.raw.b4,"B"), C5(20,TFF,R.raw.c5,"C"),
+    DB5(21,FTF,R.raw.db5,"C#/D\u266D"),D5(22,FFF,R.raw.d5,"D"),EB5(23,TFF,R.raw.eb5,"D#/E\u266D"),
+    E5(24,FTF,R.raw.e5,"E"),F5(25,FFF,R.raw.f5,"F"),GB5(26,FTT,R.raw.gb5,"F#/G\u266D"),
+    G5(27,TTF,R.raw.g5,"G"),AB5(28,TFF,R.raw.ab5,"G#/A\u266D"),A5(29,FTF,R.raw.a5,"A"),
+    BB5(30,FFF,R.raw.bb5,"A#/B\u266D"),B5(31,TTF,R.raw.b5,"B"), C6(32,TFF,R.raw.c6,"C"),
+    DB6(33,FTF,R.raw.db6,"C#/D\u266D"),D6(34,FFF,R.raw.d6,"D"),EB6(35,TFF,R.raw.eb6,"D#/E\u266D"),
+    E6(36,FTF,R.raw.e6,"E"),F6(37,FFF,R.raw.f6,"F");
 
 
     private int value;
     private boolean[] valves;
     private int rawId;
+    private String name;
 
-    Note(int value, boolean[] valves, int rawId) {
+    Note(int value, boolean[] valves, int rawId, String name) {
         this.value = value;
         this.valves = valves;
         this.rawId = rawId;
+        this.name = name;
     }
 
     public int getValue() {
@@ -39,11 +41,15 @@ public enum Note implements Fingerings {
         return valves;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getRawId() {
         return rawId;
     }
 
-    public Note getNoteById(int id) {
+    public static Note getNoteById(int id) {
         switch(id) {
             case 0: return E3;
             case 1: return F3;
@@ -80,8 +86,9 @@ public enum Note implements Fingerings {
             case 32: return C6;
             case 33: return DB6;
             case 34: return D6;
-            case 35: return E6;
-            case 36: return F6;
+            case 35: return EB6;
+            case 36: return E6;
+            case 37: return F6;
             default:
                 throw new IllegalArgumentException(id + "is not a valid note id!");
         }
