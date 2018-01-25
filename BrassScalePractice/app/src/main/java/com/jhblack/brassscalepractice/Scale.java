@@ -6,7 +6,7 @@ import android.util.Log;
  * Created by Jared on 1/15/2018.
  */
 
-public class Scale
+public class Scale {
     private String scaleName;
     private Note startingNote;
     private Note currentNote;
@@ -15,19 +15,6 @@ public class Scale
     private int[] scaleType;
 
     public Scale(Note startingNote, int[] scaleType) {
-
-        currentNote = 0;
-        scaleArr = new boolean[scaleType.length][3];
-        int noteId = startingNote.getValue();
-        for(int r = 0; r < scaleArr.length; r++) {
-            scaleArr[r] = Note.getNoteById(noteId).getValves();
-            noteId += scaleType[r];
-        }
-    }
-
-    public boolean[] getNextNote() {
-        return scaleArr[currentNote];
-
         currentNote = startingNote;
         this.startingNote = startingNote;
         this.scaleType = scaleType;
@@ -36,8 +23,6 @@ public class Scale
 
     public boolean[] getCurrentValves() {
         return currentNote.getValves();
-
-
     }
 
     public Note getCurrentNote() {
@@ -48,32 +33,41 @@ public class Scale
         currentNote = startingNote;
     }
 
-    public void incrementNote() {
+    public boolean incrementNote() {
         if(scaleLoc < scaleType.length && goingUp) {
             currentNote = Note.getNoteById(currentNote.getValue() + scaleType[scaleLoc]);
             scaleLoc++;
-        } else if(scaleLoc >= 0 && )
+            return true;
+        } else if(scaleLoc >= 0 && !goingUp)  {
+            currentNote = Note.getNoteById(currentNote.getValue() - scaleType[scaleLoc]);
+            scaleLoc--;
+            return true;
+        } else if(scaleLoc < 0 && !goingUp) {
+            return false;
+        } else if(scaleLoc == scaleType.length) {
+            goingUp = !goingUp;
+            scaleLoc--;
+        }
+
+        return false;
     }
 
     public String getNoteName() {
+        return currentNote.getName();
+    }
 
-        return Note.getNoteById(currentNote).getName();
-
-//        switch(currentNote) {
-//            case 0: return "C";
-//            case 1: return "D";
-//            case 2: return "E";
-//            case 3: return "F";
-//            case 4: return "G";
-//            case 5: return "A";
-//            case 6: return "B";
-//            case 7: return "C";
-//        }
-//        return "L#";
-
+    public int getCurrentIndex() {
+        return scaleLoc;
     }
 
     public int[] getNoteRawIds() {
-        return
+        int[] rawIds = new int[scaleType.length + 1];
+        Note workingNote = startingNote;
+        rawIds[0] = workingNote.getRawId();
+        for(int i = 1; i <= scaleType.length; i++) {
+            workingNote = Note.getNoteById(workingNote.getValue() + scaleType[i-1]);
+            rawIds[i] = workingNote.getRawId();
+        }
+        return rawIds;
     }
 }

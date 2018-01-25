@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         soundPool = new SoundPool.Builder().build();
         metId = soundPool.load(mContext, R.raw.click, 1);
         startButton = findViewById(R.id.start_button);
-        cMaj = new Scale();
-        int[] notes = cMaj.getNoteNames();
+        cMaj = new Scale(Note.EB4, ScaleType.MAJOR);
+        int[] notes = cMaj.getNoteRawIds();
         noteIds = new int[8];
         noteView = findViewById(R.id.note_display);
         for(int i = 0; i < notes.length; i++) {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void valveCheck() {
-        boolean[] correctValves = cMaj.getNextNote();
+        boolean[] correctValves = cMaj.getCurrentValves();
         boolean[] valvesPressed = ValveOnTouchListener.getValvesPressed();
 
             if (Arrays.equals(correctValves, valvesPressed)) {
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("MainActivity/valveCheck", "Note " + currentNoteName + " is correct");
                 soundPool.stop(lastNote);
-                lastNote = soundPool.play(noteIds[cMaj.getCurrentNote()], 1, 1, 1, 1, 1f);
+                lastNote = soundPool.play(noteIds[cMaj.getCurrentIndex()], 1, 1, 1, 1, 1f);
                 cMaj.incrementNote();
                 lastWasWrong = false;
             } else if(!Arrays.equals(valvesPressed, lastValves)){
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void incrementScore() {
-        if(cMaj.getCurrentNote() == 7) {
+        if(cMaj.getCurrentIndex() == 7) {
             score += 16;
         } else {
             score += 6;
