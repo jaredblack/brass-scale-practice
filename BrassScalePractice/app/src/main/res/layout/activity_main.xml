@@ -8,37 +8,52 @@
     android:paddingVertical="16dp"
     tools:context="com.jhblack.brassscalepractice.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <Button
         android:id="@+id/valve_3"
         android:layout_width="0dp"
-        android:layout_height="130dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="70dp"
         android:text="@string/valve_3"
         app:layout_constraintBottom_toTopOf="@+id/valve_2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_view" />
 
     <Button
         android:id="@+id/valve_2"
         android:layout_width="0dp"
-        android:layout_height="130dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="70dp"
         android:text="@string/valve_2"
         app:layout_constraintBottom_toTopOf="@+id/valve_1"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valve_3" />
 
     <Button
         android:id="@+id/valve_1"
         android:layout_width="0dp"
-        android:layout_height="130dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="16dp"
         android:text="@string/valve_1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valve_2" />
 
     <TextView
         android:id="@+id/note_display"
@@ -46,21 +61,22 @@
         android:layout_height="wrap_content"
         android:text="@string/note_display_default"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/start_button"
+        app:layout_constraintBottom_toTopOf="@+id/score_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_button" />
 
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:onClick="start"
         android:text="Start"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/score_view"
@@ -72,6 +88,7 @@
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/valve_3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
