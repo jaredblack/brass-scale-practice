@@ -1,19 +1,19 @@
 package com.jhblack.brassscalepractice;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
+
 
 import java.util.Arrays;
 import java.util.Timer;
@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private Timer met;
     private int lastNote = 0;
     private boolean[] lastValves = new boolean[3];
-    private Button startButton;
     private TextView noteView;
     private boolean lastWasWrong = false;
     private int score = 0;
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         soundPool = new SoundPool.Builder().build();
         metId = soundPool.load(mContext, R.raw.click, 1);
-        startButton = findViewById(R.id.start_button);
         cMaj = new Scale(Note.EB4, ScaleType.MAJOR);
         int[] notes = cMaj.getNoteRawIds();
         noteIds = new int[8];
@@ -55,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             noteIds[i] = soundPool.load(mContext, notes[i], 1);
         }
         wrongId = soundPool.load(mContext, R.raw.wrong, 1);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         valve1 = findViewById(R.id.valve_1);
         valve2 = findViewById(R.id.valve_2);
@@ -63,36 +63,10 @@ public class MainActivity extends AppCompatActivity {
         valve1.setOnTouchListener(new ValveOnTouchListener(1));
         valve2.setOnTouchListener(new ValveOnTouchListener(2));
         valve3.setOnTouchListener(new ValveOnTouchListener(3));
-//        Spinner spinner = findViewById(R.id.note_selector);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.note_names, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-
     }
 
-    public void start(View view) {
 
-        if (firstTime) {
-            met = new Timer();
-            TimerTask metTask = new TimerTask() {
-                @Override
-                public void run() {
-                    valveCheck();
-                }
-            };
-            met.schedule(metTask, 0L, 90L);
-            startButton.setText(R.string.stop_state);
-            firstTime = false;
-        } else {
-            met.cancel();
-            soundPool.stop(lastNote);
-            cMaj.reset();
-            startButton.setText(R.string.start_state);
-            noteView.setText(R.string.note_display_default);
-            firstTime = true;
-            score = 0;
-        }
-    }
+
 
     public void valveCheck() {
         boolean[] correctValves = cMaj.getCurrentValves();
@@ -167,5 +141,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_start) {
+            if (firstTime) {
+                met = new Timer();
+                TimerTask metTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        valveCheck();
+                    }
+                };
+                met.schedule(metTask, 0L, 90L);
+                firstTime = false;
+            } else {
+                met.cancel();
+                soundPool.stop(lastNote);
+                cMaj.reset();
+                noteView.setText(R.string.note_display_default);
+                firstTime = true;
+                score = 0;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

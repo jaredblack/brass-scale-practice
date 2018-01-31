@@ -22,6 +22,7 @@ public class Scale {
     }
 
     public boolean[] getCurrentValves() {
+        Log.d("Scale", "scaleLoc: " + scaleLoc);
         return currentNote.getValves();
     }
 
@@ -46,7 +47,9 @@ public class Scale {
             return false;
         } else if(scaleLoc == scaleType.length) {
             goingUp = !goingUp;
+
             scaleLoc--;
+            currentNote = Note.getNoteById(currentNote.getValue() - scaleType[scaleLoc]);
         }
 
         return false;
