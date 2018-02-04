@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         soundPool = new SoundPool.Builder().build();
         metId = soundPool.load(mContext, R.raw.click, 1);
-        cMaj = new Scale(Note.EB4, ScaleType.MAJOR);
+        cMaj = new Scale(Note.BB3, ScaleType.BEBOP);
         int[] notes = cMaj.getNoteRawIds();
-        noteIds = new int[8];
+        noteIds = new int[notes.length];
         noteView = findViewById(R.id.note_display);
         for(int i = 0; i < notes.length; i++) {
             noteIds[i] = soundPool.load(mContext, notes[i], 1);
@@ -87,12 +87,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivity/valveCheck", "Note " + currentNoteName + " is correct");
                 soundPool.stop(lastNote);
                 lastNote = soundPool.play(noteIds[cMaj.getCurrentIndex()], 1, 1, 1, 1, 1f);
-                cMaj.incrementNote();
+                if(!cMaj.incrementNote())
+                    stop();
                 lastWasWrong = false;
             } else if(!Arrays.equals(valvesPressed, lastValves)){
-
                 wrongValves(correctValves);
-
             }
         lastValves = Arrays.copyOf(valvesPressed, 3);
     }
@@ -163,16 +162,20 @@ public class MainActivity extends AppCompatActivity {
                 met.schedule(metTask, 0L, 90L);
                 firstTime = false;
             } else {
-                met.cancel();
-                soundPool.stop(lastNote);
-                cMaj.reset();
-                noteView.setText(R.string.note_display_default);
-                firstTime = true;
-                score = 0;
+                stop();
             }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void stop() {
+        met.cancel();
+        soundPool.stop(lastNote);
+        cMaj.reset();
+        noteView.setText(R.string.note_display_default);
+        firstTime = true;
+        score = 0;
+    }
 }

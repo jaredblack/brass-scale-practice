@@ -39,17 +39,22 @@ public class Scale {
             currentNote = Note.getNoteById(currentNote.getValue() + scaleType[scaleLoc]);
             scaleLoc++;
             return true;
-        } else if(scaleLoc >= 0 && !goingUp)  {
-            currentNote = Note.getNoteById(currentNote.getValue() - scaleType[scaleLoc]);
+        } else if(scaleLoc > 0 && !goingUp)  {
             scaleLoc--;
+            currentNote = Note.getNoteById(currentNote.getValue() - scaleType[scaleLoc]);
+
             return true;
-        } else if(scaleLoc < 0 && !goingUp) {
-            return false;
+        } else if(scaleLoc == 0 && !goingUp) {
+            goingUp = true;
+            currentNote = Note.getNoteById(currentNote.getValue() + scaleType[scaleLoc]);
+            scaleLoc++;
+            return true;
         } else if(scaleLoc == scaleType.length) {
             goingUp = !goingUp;
 
             scaleLoc--;
             currentNote = Note.getNoteById(currentNote.getValue() - scaleType[scaleLoc]);
+            return true;
         }
 
         return false;
