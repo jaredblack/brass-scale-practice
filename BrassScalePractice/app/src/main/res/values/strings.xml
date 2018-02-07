@@ -13,13 +13,18 @@
         <item>A</item>
         <item>E</item>
         <item>B</item>
-        <item>G</item>
         <item>G&#9837;</item>
         <item>D&#9837;</item>
         <item>A&#9837;</item>
         <item>E&#9837;</item>
         <item>B&#9837;</item>
-        <item>F&#9837;</item>
+        <item>F</item>
+    </string-array>
+    <string-array name="scale_types">
+        <item>Major</item>
+        <item>Dorian</item>
+        <item>Mixolydian</item>
+        <item>Bebop</item>
     </string-array>
     <string name="score">Score %1$d</string>
     <string name="a">A</string>
@@ -34,6 +39,4 @@
     <string name="gb">F#/G&#9837;</string>
     <string name="g">G</string>
     <string name="ab">G#/A&#9837;</string>
-
-
 </resources>

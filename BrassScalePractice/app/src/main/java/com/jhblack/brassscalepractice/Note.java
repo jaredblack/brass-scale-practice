@@ -6,7 +6,7 @@ package com.jhblack.brassscalepractice;
 
 public enum Note implements Fingerings {
 
-    E3(0,TTT, R.raw.e3, "E"),F3(1,TFT,R.raw.f3,"F"),GB3(2,FTT,R.raw.gb3,"F#/G\u23E5"),
+    E3(0,TTT, R.raw.e3, "E"),F3(1,TFT,R.raw.f3,"F"),GB3(2,FTT,R.raw.gb3,"F#/G\u266D"),
     G3(3,TTF,R.raw.g3,"G"),AB3(4,TFF,R.raw.ab3,"G#/B\u266D"),A3(5,FTF,R.raw.a3,"A"),
     BB3(6,FFF,R.raw.bb3,"A#/B\u266D"),B3(7,TTT,R.raw.b3,"B"), C4(8,TFT,R.raw.c4,"C"),
     DB4(9,FTT,R.raw.db4,"C#/D\u266D"),D4(10,TTF,R.raw.d4,"D"),EB4(11,TFF,R.raw.eb4,"D#/E\u266D"),

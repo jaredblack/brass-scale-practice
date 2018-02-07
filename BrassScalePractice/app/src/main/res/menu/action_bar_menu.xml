@@ -11,9 +11,16 @@
     app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/spinner"
+        android:id="@+id/note_spinner"
         android:title="Note Selector"
         app:actionViewClass="android.widget.Spinner"
         android:background="#ff00"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/type_spinner"
+        android:title="Type Selector"
+        app:actionViewClass="android.widget.Spinner"
+        android:background="#ff00"
+        app:showAsAction="ifRoom" />
 </menu>
